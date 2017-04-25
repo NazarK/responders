@@ -30,12 +30,12 @@ class <%= controller_class_name %>Controller < ApplicationController
   def create
     @<%= singular_table_name %> = <%= orm_class.build(class_name, attributes_params) %>
     <%= "flash[:notice] = '#{class_name} was successfully created.' if " if flash? %>@<%= orm_instance.save %>
-    respond_with(@<%= singular_table_name %>)
+    respond_with @<%= singular_table_name %>, location: (<%= singular_table_name %>s_path if @<%= singular_table_name%>.errors.blank?)
   end
 
   def update
     <%= "flash[:notice] = '#{class_name} was successfully updated.' if " if flash? %>@<%= orm_instance.update(attributes_params) %>
-    respond_with(@<%= singular_table_name %>)
+    respond_with @<%= singular_table_name %>, location: (<%= singular_table_name %>s_path if @<%= singular_table_name%>.errors.blank?)
   end
 
   def destroy
